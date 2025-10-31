@@ -23,11 +23,11 @@ except FileNotFoundError:
     exit()
 
 # Step 3: Data Cleaning & Preprocessing
-# Handle missing values
+# Handle missing values (as seen in the notebook)
 data['Saving accounts'].fillna(data['Saving accounts'].mode()[0], inplace=True)
 data['Checking account'].fillna(data['Checking account'].mode()[0], inplace=True)
 
-# Drop irrelevant columns
+# Drop irrelevant columns (as seen in the notebook)
 if 'Unnamed: 0' in data.columns:
     data.drop('Unnamed: 0', axis=1, inplace=True)
 
@@ -50,6 +50,7 @@ model_features = X.columns.tolist()
 joblib.dump(model_features, 'model_features.pkl')
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
+print("Train-test split complete.")
 
 # Step 5: Standardization
 scaler = StandardScaler()
@@ -89,9 +90,11 @@ print("\n--- Test Set Evaluation Report ---")
 print(classification_report(y_test, y_pred, target_names=['Good Risk (0)', 'Bad Risk (1)']))
 print("----------------------------------")
 
-# Step 9: Save the model and scaler
+# Step 9: Save the model, scaler, and features
 joblib.dump(best_rf, 'best_credit_risk_model2.pkl')
 joblib.dump(scaler, 'scaler2.pkl')
+joblib.dump(model_features, 'model_features.pkl') # Already done, but good to be explicit
 
-print("\nSuccess! 'best_credit_risk_model2.pkl' and 'scaler2.pkl' have been saved.")
+print("\nSuccess! 'best_credit_risk_model2.pkl', 'scaler2.pkl', and 'model_features.pkl' have been saved.")
 print("You can now run the Streamlit app: `streamlit run app.py`")
+
