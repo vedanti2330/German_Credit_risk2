@@ -4,6 +4,6 @@ numpy
 matplotlib
 scikit-learn
 joblib
-imblearn
+imbalanced-learn
 SMOTE
 warnings
